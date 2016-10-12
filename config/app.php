@@ -12,7 +12,7 @@ return [
     | any other location as required by the application or its packages.
     */
 
-    'name' => 'Laravel',
+    'name' => 'Foobooks',
 
     /*
     |--------------------------------------------------------------------------
@@ -172,11 +172,14 @@ return [
         /*
          * Application Service Providers...
          */
-        App\Providers\AppServiceProvider::class,
-        App\Providers\AuthServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
-        App\Providers\EventServiceProvider::class,
-        App\Providers\RouteServiceProvider::class,
+        Foobooks\Providers\AppServiceProvider::class,
+        Foobooks\Providers\AuthServiceProvider::class,
+        // Foobooks\Providers\BroadcastServiceProvider::class,
+        Foobooks\Providers\EventServiceProvider::class,
+        Foobooks\Providers\RouteServiceProvider::class,
+
+        Barryvdh\Debugbar\ServiceProvider::class,
+        Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
 
     ],
 
@@ -225,6 +228,8 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+
+        'Debugbar' => Barryvdh\Debugbar\Facade::class,
 
     ],
 
