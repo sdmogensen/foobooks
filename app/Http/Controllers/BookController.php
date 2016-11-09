@@ -104,6 +104,6 @@ class BookController extends Controller
         $loremenator = \SBuck\Loremenator();
         $text = $loremenator->getParagraphs($howManyParagraphs);
         # Display the results...
-        return view('lorem')->with(['text', $text]);
+        return view('lorem')->with('text', $text);
     }
 }
