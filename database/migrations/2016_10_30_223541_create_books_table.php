@@ -2,6 +2,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+
 class CreateBooksTable extends Migration
 {
     /**
@@ -20,7 +21,7 @@ class CreateBooksTable extends Migration
         $table->timestamps();
         # The rest of the fields...
         $table->string('title');
-        $table->string('author');
+        // $table->string('author')->nullable();
         $table->integer('published');
         $table->string('cover');
         $table->string('purchase_link');

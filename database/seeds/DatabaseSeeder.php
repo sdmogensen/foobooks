@@ -11,7 +11,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UsersTableSeeder::class);
+        $this->call(UsersTableSeeder::class);
+        # Because `books` will be associated with `authors`,
+        # authors should be seeded first
+        $this->call(AuthorsTableSeeder::class);
         $this->call(BooksTableSeeder::class);
+        $this->call(TagsTableSeeder::class);
+        $this->call(BookTagTableSeeder::class);
     }
 }

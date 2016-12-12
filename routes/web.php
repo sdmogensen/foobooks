@@ -3,19 +3,19 @@
 * Book resource
 */
 # Index page to show all the books
-Route::get('/books', 'BookController@index')->name('books.index');
+Route::get('/books', 'BookController@index')->name('books.index')->middleware('auth');
 # Show a form to create a new book
-Route::get('/books/create', 'BookController@create')->name('books.create');
+Route::get('/books/create', 'BookController@create')->name('books.create')->middleware('auth');
 # Process the form to create a new book
 Route::post('/books', 'BookController@store')->name('books.store');
 # Show an individual book
-Route::get('/books/{title}', 'BookController@show')->name('books.show');
+Route::get('/books/{id}', 'BookController@show')->name('books.show');
 # Show form to edit a book
-Route::get('/books/{title}/edit', 'BookController@edit')->name('books.edit');
+Route::get('/books/{id}/edit', 'BookController@edit')->name('books.edit');
 # Process form to edit a book
-Route::put('/books/{title}', 'BookController@update')->name('books.update');
+Route::put('/books/{id}', 'BookController@update')->name('books.update');
 # Delete a book
-Route::delete('/books/{title}', 'BookController@destroy')->name('books.destroy');
+Route::delete('/books/{id}', 'BookController@destroy')->name('books.destroy');
 # The above routes *could* all be replaced with this one line:
 # Route::resource('books', 'BookController');
 /**
@@ -43,14 +43,14 @@ for($i = 0; $i < 100; $i++) {
 */
 # Make it so the logs can only be seen locally
 if(App::environment() == 'local') {
-    Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
+    Route::get('/logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 }
 /**
 * Main homepage
 */
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Route::get('/debug', function() {
 
@@ -86,3 +86,33 @@ Route::get('/debug', function() {
     echo '</pre>';
 
 });
+
+/**
+* ref: https://github.com/susanBuck/dwa15-fall2016-notes/blob/master/03_Laravel/21_Schemas_and_Migrations.md#starting-overyour-first-migrations
+*/
+if(App::environment('local')) {
+    Route::get('/drop', function() {
+        DB::statement('DROP database foobooks');
+        DB::statement('CREATE database foobooks');
+        return 'Dropped foobooks; created foobooks.';
+    });
+};
+
+Route::get('/show-login-status', function() {
+    $user = Auth::user();
+    if($user) {
+        dump($user->toArray());
+    }
+    else {
+        dump('You are not logged in');
+    }
+    return;
+});
+
+Route::get('/', 'PageController@welcome');
+
+Auth::routes();
+
+Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
+
+// Route::get('/home', 'HomeController@index');
